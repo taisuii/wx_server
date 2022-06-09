@@ -1,31 +1,35 @@
-const http = require('http');
-const request = require("request");
-const soft = require("./soft");
+const express = require('express');
+const soft = require('./soft');
+const wx = require('./WX_SERVER');
+const app = express();
+app.use(express.urlencoded({extended:false}))
 
-const server = http.createServer();
-
-server.listen(81, function () {
-    console.log("strat server...");
-})
-
-server.on('request', function (req, res) {
-
+app.listen(81);
+console.log("The server start of http://localhost:81")
+app.get("*", function (req, res) {
     soft.log(req);
-    switch (req.url) {
-        case '/taisui': {
-            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8', "Access-Control-Allow-Origin": "*"});
-            res.end(soft.ret());
+    switch (req.path) {
+        case '/':
+            wx.wx_get(req, res);
             break;
-        }
-        case '/': {
-            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8', "Access-Control-Allow-Origin": "*"});
-            res.end(JSON.stringify({code:0,msg:'Welcome'}));
+        case '/taisui' :
+            soft.ret(res);
             break;
-        }
         default :
-            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8', "Access-Control-Allow-Origin": "*"});
-            res.end(JSON.stringify({code:1,msg:'未定义'}));
+            res.send("1");
             break;
     }
 })
 
+
+app.post("*", function (req, res) {
+    soft.log(req);
+    switch (req.path) {
+        case '/':
+            wx.wx_post(req, res);
+            break;
+        default :
+            res.send("1");
+            break;
+    }
+})

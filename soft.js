@@ -1,33 +1,25 @@
-function ret(){
-    var data = {}
-    //远程获取服务器地址
-    data.ip = '43.142.29.14:6632'
+﻿const ret = (res) => {
+    let data = {}
+    data.ip = '43.142.29.14:6632'//备用服务器地址
     data.infrom='各位在5.27前务必要有提卡记录，否则会被ti'
 
-    //全局公告
-    data.datas = false
-    data.data = '请添加QQ群号735400231'
+    data.datas = false//是否弹出公告，全软件
+    data.data = '请添加QQ群号735400231'//公告内容
 
-    //远程删除软件列表
-    data.kill = false
-    data.killapp = ['抖音砍价']
+    data.kill = true//是否远程删除
+    data.killapp = ['抖音砍价','迎晚部落','title']//需要自删APP列表
 
-    //弹出公告软件列表
-    data.dataapps = false
-    data.dataapp = ['活动软件 ', '多糖']
-    data.str = '暂无公告'
+    data.dataapps = false//部分软件是否弹出公告
+    data.dataapp = ['活动软件 ', '多糖']//需要指定弹出公告软件列表
+    data.str = '暂无公告'//需要指定弹出公告软件列表
 
-    //dll版本
     data.dll='https://wws.lanzouq.com/i9cvH059224d'
     data.dllv='3'
-
-    return JSON.stringify(data);
+    res.send(JSON.stringify(data));
 }
-
 function log(req){
-    console.log(req.method);
+    console.log(req.method,req.url,req.query,req.body);
 }
-
 module.exports = {
     ret,
     log

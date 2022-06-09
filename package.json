@@ -4,15 +4,17 @@
   "description": "",
   "main": "www.js",
   "scripts": {
-    "install_request": "npm install request",
-    "install_http": "npm install http",
-    "test": "node www.js"
+    "test": "node www.js",
+    "test2": "node Mysql.js"
   },
   "keywords": [],
   "author": "taisuii",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.1",
     "http": "^0.0.1-security",
-    "request": "^2.88.2"
+    "mysql": "^2.18.1",
+    "request": "^2.88.2",
+    "xml2js": "^0.4.23"
   }
 }

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50%;
+        }
+
+        .container {
+            padding: 20px;
+            width: 80%;
+            height: 80%;
+            background-color: #eee;
+            border: 1px solid black;
+            overflow: auto;
+        }
+
+        .bar-group {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .bar-group input:first-of-type {
+            padding: 5px;
+            width: 300px;
+        }
+
+        .bar-group input:not(:first-of-type) {
+            padding: 5px 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="container">
+        <ul class="msg"></ul>
+    </div>
+</div>
+<hr/>
+<form onsubmit="return false">
+    <p class="bar-group">
+        <input type="text" id="umsg" placeholder="说点什么..."/>
+        <input type="submit" value="发送" onclick="send()"/>
+        <input type="reset" value="重输" onclick="umsg.focus()"/>
+        <input type="button" value="清屏" onclick="clearTxt()"/>
+    </p>
+</form>
+<script>
+    var container = document.querySelector('.container');
+    var msg = document.querySelector('.msg');
+    var umsg = document.querySelector('#umsg');
+
+    // 发送数据
+    function send() {
+        if (umsg.value) {	// 非空
+            var uli = document.createElement('li');
+            uli.textContent = '你：' + umsg.value;
+            msg.appendChild(uli);
+
+            // URL查询参数实例，直接对象格式，省去了很多麻烦
+            var reqParams = new URLSearchParams({
+                app_key: '612d6926-5036-4521-9b85-b2dbe1a7f698',	// 免费接口
+                user_id: 0,	// 用户唯一标识（测试的话不用管）
+                q: umsg.value	// 输入的内容
+            });
+
+            // 头信息实例
+            var reqHeader = new Headers();
+            reqHeader.append('Content-Type', 'application/x-www-form-urlencoded');
+            // reqHeader.append('Content-Type', 'application/json');
+
+            // 请求实例
+            var request = new Request('http://api.ruyi.ai/v1/message?' + reqParams, {
+                method: 'GET'	// 请求方式【只接受GET请求】
+            });
+
+            fetch(request)    // 发送请求
+                .then(res => res.json())    // 转为 JSON
+                .then(res => {	// 处理数据
+                    // 普通结果
+                    var retval = res.result.intents[0].result.text.replace(/\&name/g, '如宝');
+                    var hli = document.createElement('li');
+                    hli.textContent = '如宝：' + retval;
+                    msg.appendChild(hli);
+                    container.scrollTop = container.scrollHeight; // 滚动条置底
+                });
+            umsg.value = '';
+        }
+        umsg.focus();	// 聚焦
+        container.scrollTop = container.scrollHeight; // 滚动条置底
+    }
+
+    // 清空屏幕
+    function clearTxt() {
+        msg.innerHTML = null;
+        umsg.value = null;
+        umsg.focus();
+    }
+
+    umsg.focus();	// 聚焦
+</script>
+</body>
+</html>
