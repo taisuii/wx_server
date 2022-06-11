@@ -1,10 +1,10 @@
 const mysql = require('mysql');
 module.exports = {
     config : {
-        host     : '43.142.29.14',
-        user     : 'SENDKEY',
-        password : 'SENDKEY',
-        database : 'sendkey'
+        host     : 'localhost',
+        user     : 'admin',
+        password : '123456',
+        database : '123456'
     },
     sqlConnect : function(sql,sqlArr,callBack){
         let pool = mysql.createPool(this.config);
