@@ -1,7 +1,7 @@
 
 # 微信公众号开发例子
 ## 服务器环境
-node.js mysql
+node.js+mysql
 
 ## 微信开发者文档
 https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Overview.html
