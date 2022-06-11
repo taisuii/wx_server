@@ -2,10 +2,10 @@
   "name": "untitled1",
   "version": "1.0.0",
   "description": "",
-  "main": "www.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node www.js",
-    "test2": "node Mysql.js"
+    "start": "node app.js",
+    "Mysql": "node src/Mysql.js"
   },
   "keywords": [],
   "author": "taisuii",
