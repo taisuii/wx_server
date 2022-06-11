@@ -4,8 +4,8 @@ const wx = require('./src/WX_SERVER');
 
 const app = express();
 app.use(express.urlencoded({extended:false}))
-app.listen(81);
-console.log("The server start of http://localhost:81")
+app.listen(80);
+console.log("The server start of http://localhost:80")
 
 app.get("*", function (req, res) {
     soft.log(req);
